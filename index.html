@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Terminex – Professionaalne kahjuritõrje Harjumaal</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #1a7a3c;
+    --green-d: #145f2e;
+    --green-light: #238a48;
+    --green-soft: #d4f1e0;
+    --green-pale: #eaf6ef;
+    --amber: #e8a020;
+    --amber-pale: #fdf3e0;
+    --dark: #141414;
+    --mid: #4a4a4a;
+    --gray: #7a7a7a;
+    --border: #e0e0dc;
+    --bg: #fafaf8;
+    --white: #ffffff;
+    --shadow-sm: 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-md: 0 16px 48px rgba(0,0,0,0.10);
+    --r: 20px;
+    --r-lg: 28px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--bg);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 5vw;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  nav.scrolled { border-color: var(--border); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+  .logo-row { display: flex; align-items: center; gap: 10px; }
+  .logo-row img { height: 28px; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--mid); text-decoration: none; letter-spacing: 0.08em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .badge-harju {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 600; color: var(--green);
+    background: var(--green-pale); border: 1px solid var(--green-soft);
+    padding: 4px 12px; border-radius: 40px;
+  }
+  .btn-pill {
+    background: var(--green); color: white; border: none;
+    padding: 11px 26px; border-radius: 44px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; transition: .25s; white-space: nowrap;
+  }
+  .btn-pill:hover { background: var(--green-d); transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(26,122,60,.45); }
+
+  /* ─── HERO ─────────────────────────────────── */
+  .hero {
+    min-height: 92vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 120px 6vw 80px; gap: 4rem;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green);
+    background: var(--green-pale); border: 1px solid var(--green-soft);
+    padding: 5px 14px; border-radius: 40px; margin-bottom: 1.4rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
+  }
+  .hero h1 .accent { color: var(--green); }
+  .hero-sub {
+    margin: 1.4rem 0 2rem; color: var(--gray);
+    font-size: 1.05rem; font-weight: 400; max-width: 440px; line-height: 1.65;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-outline {
+    background: transparent; border: 1.5px solid var(--border);
+    padding: 11px 24px; border-radius: 44px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; color: var(--dark); transition: .2s;
+  }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(135deg, var(--green-pale) 0%, #c8ecd8 100%);
+    border-radius: 32px; height: 420px;
+    box-shadow: 0 24px 60px rgba(26,122,60,.12);
+  }
+  .hero-visual img { height: 400px; filter: drop-shadow(0 12px 20px rgba(0,0,0,.12)); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 2.5rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-val { font-family: 'Syne', sans-serif; font-size: 1.7rem; font-weight: 800; color: var(--dark); }
+  .stat-lbl { font-size: 0.8rem; color: var(--gray); margin-top: 2px; }
+
+  /* ─── SECTION SCAFFOLD ─────────────────────── */
+  .sec { padding: 5.5rem 6vw; }
+  .sec-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.8rem;
+  }
+  .sec-tag::before { content: ''; display: block; width: 20px; height: 2px; background: var(--green); }
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 800; line-height: 1.12; letter-spacing: -0.02em;
+    color: var(--dark); margin-bottom: 0.8rem;
+  }
+  .sec-sub { font-size: 1rem; color: var(--gray); line-height: 1.7; max-width: 520px; }
+
+  /* ─── TEENUSED (SERVICE PACKAGES) ─────────── */
+  .packages-sec { background: var(--white); }
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.4rem; margin-top: 2.8rem;
+  }
+  .pkg-card {
+    border: 1.5px solid var(--border); border-radius: var(--r-lg);
+    padding: 2rem; background: var(--white);
+    display: flex; flex-direction: column; gap: 0;
+    transition: all .28s; position: relative; overflow: hidden;
+  }
+  .pkg-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .pkg-card.recommended {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(26,122,60,.08), var(--shadow-md);
+  }
+  .rec-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--green); color: white;
+    font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .pkg-name {
+    font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 800;
+    margin-bottom: 0.5rem; color: var(--dark);
+  }
+  .pkg-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.65; margin-bottom: 1.4rem; }
+
+  .pkg-what {
+    background: var(--green-pale); border-radius: 12px;
+    padding: 1rem 1.1rem; margin-bottom: 1.2rem;
+  }
+  .pkg-what-title {
+    font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+  .pkg-what ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .pkg-what li { font-size: 0.82rem; color: var(--mid); display: flex; align-items: flex-start; gap: 6px; }
+  .pkg-what li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .pkg-note {
+    background: var(--amber-pale); border: 1px solid #f0d080;
+    border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 1.2rem;
+    font-size: 0.8rem; line-height: 1.6;
+  }
+  .pkg-note-title { font-weight: 700; color: #a06010; margin-bottom: 3px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .pkg-note p { color: #7a5010; }
+
+  .pkg-price-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: auto;
+  }
+  .pkg-pct { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--dark); }
+  .pkg-pct small { font-size: 0.8rem; font-weight: 500; color: var(--gray); }
+  .pkg-action {
+    background: var(--dark); color: white; border: none;
+    padding: 8px 18px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem;
+    cursor: pointer; transition: .2s;
+  }
+  .pkg-card.recommended .pkg-action { background: var(--green); }
+  .pkg-action:hover { opacity: .8; }
+
+  /* ─── HOOLDUSPAKETT ─────────────────────────── */
+  .maintain-sec { background: var(--bg); }
+  .maintain-card {
+    max-width: 860px; margin: 2.8rem auto 0;
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: var(--r-lg); padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .maintain-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;
+  }
+  .maintain-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .maintain-sub { font-size: 0.9rem; color: var(--gray); }
+  .maintain-badge {
+    background: var(--green-pale); color: var(--green);
+    border: 1px solid var(--green-soft); padding: 6px 16px;
+    border-radius: 40px; font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+  }
+
+  .duration-label {
+    font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid);
+    margin-bottom: 0.7rem;
+  }
+  .duration-pills { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .dur-pill {
+    border: 1.5px solid var(--border); background: white;
+    padding: 8px 20px; border-radius: 40px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; transition: .2s; color: var(--mid);
+  }
+  .dur-pill:hover { border-color: var(--green); color: var(--green); }
+  .dur-pill.active { background: var(--green); color: white; border-color: var(--green); }
+
+  .maintain-tiers { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .tier-row {
+    border: 1.5px solid var(--border); border-radius: var(--r);
+    padding: 1.2rem 1.4rem; display: flex; justify-content: space-between;
+    align-items: center; gap: 1rem; transition: .2s;
+  }
+  .tier-row:hover { border-color: var(--green-soft); background: var(--green-pale); }
+  .tier-name { font-weight: 600; font-size: 0.92rem; margin-bottom: 3px; }
+  .tier-desc { font-size: 0.78rem; color: var(--gray); }
+  .tier-price { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--green); text-align: right; white-space: nowrap; }
+  .tier-price small { display: block; font-size: 0.72rem; color: var(--gray); font-family: 'DM Sans', sans-serif; font-weight: 500; }
+
+  .maintain-note {
+    margin-top: 1.5rem; padding: 1rem 1.2rem;
+    background: var(--green-pale); border-radius: 12px;
+    font-size: 0.82rem; color: var(--mid); line-height: 1.6;
+  }
+
+  /* discount pill inside tier */
+  .disc-tag {
+    background: var(--green); color: white;
+    font-size: 0.68rem; font-weight: 700; padding: 2px 8px;
+    border-radius: 20px; margin-left: 6px; vertical-align: middle;
+  }
+
+  /* ─── HINNAKALKULAATOR ──────────────────────── */
+  .calc-sec { background: var(--green-soft); }
+  .calc-box {
+    max-width: 1020px; margin: 2.8rem auto 0;
+    background: white; border-radius: var(--r-lg);
+    padding: 2.5rem; box-shadow: var(--shadow-md);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+  }
+  .field-label { font-weight: 600; font-size: 0.88rem; margin-bottom: 6px; display: block; }
+  .field-input {
+    width: 100%; padding: 14px 18px; border-radius: 40px;
+    border: 1.5px solid var(--border); font-size: 1rem;
+    font-family: 'DM Sans', sans-serif; transition: .2s; background: white;
+  }
+  .field-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(26,122,60,.15); }
+  .calc-options { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .calc-opt {
+    padding: 14px 18px; border: 1.5px solid var(--border); border-radius: 40px;
+    cursor: pointer; font-weight: 600; font-size: 0.9rem;
+    transition: .2s; background: white;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .calc-opt:hover { border-color: var(--green-light); background: var(--green-pale); }
+  .calc-opt.active { border-color: var(--green); background: var(--green-pale); }
+  .calc-opt-price {
+    font-weight: 800; background: rgba(26,122,60,.12);
+    padding: 4px 12px; border-radius: 30px; font-size: 0.82rem; color: var(--green);
+  }
+  .calc-result {
+    background: var(--dark); color: white; border-radius: var(--r-lg);
+    padding: 2.5rem 2rem; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center; gap: 0.6rem;
+  }
+  .calc-result-label { font-size: 0.8rem; opacity: .6; letter-spacing: 0.06em; text-transform: uppercase; }
+  .calc-result-price { font-family: 'Syne', sans-serif; font-size: 3.2rem; font-weight: 800; letter-spacing: -0.03em; }
+  .calc-result-break { font-size: 0.82rem; opacity: .65; border-top: 1px solid rgba(255,255,255,.12); padding-top: 0.8rem; margin-top: 0.4rem; max-width: 200px; line-height: 1.6; }
+  .calc-note { font-size: 0.76rem; color: var(--gray); margin-top: 0.8rem; text-align: center; }
+
+  /* ─── KUIDAS TÖÖTAME ───────────────────────── */
+  .how-sec { background: var(--white); }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 1rem; }
+  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 1.8rem; }
+  .step {
+    display: flex; gap: 1.4rem; padding: 1.3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--green-pale); color: var(--green);
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step h4 { font-weight: 700; margin-bottom: 3px; font-size: 0.95rem; }
+  .step p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+  .how-visual {
+    background: linear-gradient(140deg, var(--green-pale) 0%, #c8ecd8 100%);
+    border-radius: 28px; padding: 2rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+  .how-card {
+    background: white; border-radius: 16px; padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .how-card-icon { font-size: 1.4rem; }
+
+  /* ─── CTA BAND ─────────────────────────────── */
+  .cta-band {
+    background: var(--green); padding: 3.5rem 6vw;
+    display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .cta-band h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: white; max-width: 500px; }
+  .btn-white { background: white; color: var(--green); border: none; padding: 13px 30px; border-radius: 44px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: .2s; }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.15); }
+
+  /* ─── KONTAKT ──────────────────────────────── */
+  .contact-sec { background: var(--bg); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 1rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.8rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    background: white; padding: 1rem 1.3rem;
+    border-radius: var(--r); border: 1.5px solid var(--border);
+    font-size: 0.9rem; font-weight: 500;
+  }
+  .contact-icon { font-size: 1.2rem; }
+  .contact-form { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%; padding: 12px 16px;
+    border: 1.5px solid var(--border); border-radius: 14px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    background: white; transition: border-color .2s;
+  }
+  .contact-form textarea { min-height: 90px; resize: vertical; }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus { outline: none; border-color: var(--green); }
+
+  footer {
+    background: #111; color: #888; padding: 1.8rem 6vw;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-size: 0.82rem;
+  }
+
+  /* ─── TOAST ────────────────────────────────── */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+    background: var(--green); color: white;
+    padding: 1rem 1.8rem; border-radius: 50px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    transform: translateY(80px); opacity: 0;
+    transition: .4s cubic-bezier(.22,1,.36,1);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ─── REVEAL ───────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(22px); transition: .65s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ───────────────────────────── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 110px; }
+    .hero-sub { margin-left: auto; margin-right: auto; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { height: 260px; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .calc-box { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .maintain-tiers { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .badge-harju { display: none; }
+    .cta-band { flex-direction: column; text-align: center; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo-row">
+    <img src="https://gist.githubusercontent.com/ErikMandmaa/b5bce950672c1284a82bd757aade7161/raw/71a6452ecb532b03a40ac47e399c9412e0f4e470/Terminex%2520logo.svg" alt="Terminex logo">
+    <span class="logo-text">Terminex</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#teenused">Teenused</a></li>
+    <li><a href="#hooldus">Hoolduspakett</a></li>
+    <li><a href="#calc">Kalkulaator</a></li>
+    <li><a href="#kuidas">Protsess</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span class="badge-harju">📍 Harjumaa</span>
+    <button class="btn-pill" onclick="scrollToSection('paring')">Küsi pakkumist</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1>Võõrnälkjatõrje<br><span class="accent">professionaalidelt</span></h1>
+    <p class="hero-sub">Saada meile päring, saa hinnapakkumine ja laske meil nälkjaprobleem lahendada – käsitsi, graanulitega või mõlema meetodiga.</p>
+    <div class="hero-btns">
+      <button class="btn-pill" onclick="scrollToSection('teenused')">Vaata teenuseid →</button>
+      <button class="btn-outline" onclick="scrollToSection('calc')">Arvuta hind</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="https://gist.githubusercontent.com/ErikMandmaa/b5bce950672c1284a82bd757aade7161/raw/71a6452ecb532b03a40ac47e399c9412e0f4e470/Terminex%2520logo.svg" alt="Terminex">
+  </div>
+</section>
+
+<!-- TEENUSED -->
+<section class="sec packages-sec reveal" id="teenused">
+  <div class="sec-tag">Teenused</div>
+  <h2 class="sec-title">Vali sobiv teenus</h2>
+  <p class="sec-sub">Iga teenus algab meeskonna nõupidamisega aia omanikuga. Käime kogu aia läbi ja selgitame olukorra.</p>
+
+  <div class="packages-grid">
+
+    <!-- KÄSITSI KORJE -->
+    <div class="pkg-card">
+      <div class="pkg-name">Käsitsi korje</div>
+      <div class="pkg-desc">Meeskond peab nõu aia omanikuga. Käiakse kogu aed läbi ja korjatakse teod käsitsi.</div>
+      <div class="pkg-what">
+        <div class="pkg-what-title">Mida teeme</div>
+        <ul>
+          <li>Nõupidamine aia omanikuga</li>
+          <li>Kogu aia läbivaatus</li>
+          <li>Teode käsitsi eemaldamine</li>
+        </ul>
+      </div>
+      <div class="pkg-note">
+        <div class="pkg-note-title">⚠️ Miks see pole parim valik?</div>
+        <p>Käsitsi korje eemaldab olemasolevad teod, kuid ei takista uute tulekut. Ilma järelhoolduseta tulevad teetigud tagasi.</p>
+      </div>
+      <div class="pkg-price-row">
+        <div>
+          <div class="pkg-pct">0,05 €<small>/m²</small></div>
+          <div style="font-size:0.76rem;color:var(--gray);margin-top:3px;">Ühekordne hind</div>
+        </div>
+        <button class="pkg-action" onclick="scrollToSection('calc')">Arvuta →</button>
+      </div>
+    </div>
+
+    <!-- KÄSITSI + GRAANULID (RECOMMENDED) -->
+    <div class="pkg-card recommended">
+      <div class="rec-badge">Soovitatav</div>
+      <div class="pkg-name">Käsitsi korje + graanulid</div>
+      <div class="pkg-desc">Korjame teod käsitsi ja lisame graanulid, mis hoiavad uued teod eemal kogu hooaja.</div>
+      <div class="pkg-what">
+        <div class="pkg-what-title">Mida teeme</div>
+        <ul>
+          <li>Nõupidamine aia omanikuga</li>
+          <li>Kogu aia läbivaatus</li>
+          <li>Teode käsitsi eemaldamine</li>
+          <li>Graanulite paigaldus tõkke loomiseks</li>
+        </ul>
+      </div>
+      <div class="pkg-note" style="background:#edf7f0;border-color:#aaddbb;">
+        <div class="pkg-note-title" style="color:#1a7a3c;">✅ Miks see on parim valik?</div>
+        <p style="color:#2a5a38;">Ühendab kohese likvideerimise pikaajalise kaitsega. Tulemus on märgatavalt kestvam kui üksnes korjel.</p>
+      </div>
+      <div class="pkg-price-row">
+        <div>
+          <div class="pkg-pct">0,11 €<small>/m²</small></div>
+          <div style="font-size:0.76rem;color:var(--gray);margin-top:3px;">Ühekordne hind</div>
+        </div>
+        <button class="pkg-action" onclick="scrollToSection('calc')">Arvuta →</button>
+      </div>
+    </div>
+
+    <!-- AINULT GRAANULID -->
+    <div class="pkg-card">
+      <div class="pkg-name">Ainult graanulid</div>
+      <div class="pkg-desc">Meeskond peab nõu aia omanikuga ja paigaldab graanulid. Sobib ennetuseks või kergete probleemide korral.</div>
+      <div class="pkg-what">
+        <div class="pkg-what-title">Mida teeme</div>
+        <ul>
+          <li>Nõupidamine aia omanikuga</li>
+          <li>Graanulite strateegiline paigaldus</li>
+        </ul>
+      </div>
+      <div class="pkg-note">
+        <div class="pkg-note-title">⚠️ Miks see pole parim valik?</div>
+        <p>Graanulid toimivad tõkkena, kuid ei pruugi kõiki nälkjaid eemaldada, lisaks võivad surnud nälkjad paikneda ebameeldivates kohtades.</p>
+      </div>
+      <div class="pkg-price-row">
+        <div>
+          <div class="pkg-pct">0,07 €<small>/m²</small></div>
+          <div style="font-size:0.76rem;color:var(--gray);margin-top:3px;">Ühekordne hind</div>
+        </div>
+        <button class="pkg-action" onclick="scrollToSection('calc')">Arvuta →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ÜHEKORDNE / KORDUVKORJED INFOPANEEL -->
+  <div style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;">
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:1.4rem;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:0.7rem;">🔹 Ühekordne korje</div>
+      <div style="font-size:0.84rem;color:var(--mid);line-height:1.65;">
+        <strong>Kuni 3000 m²:</strong> 75 €<br>
+        <strong>Üle 3000 m²:</strong> küsi pakkumist<br>
+        <em style="color:var(--gray);font-size:0.78rem;">Sobib esmakontrolliks või väiksemateks probleemideks</em>
+      </div>
+    </div>
+    <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:1.4rem;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:0.7rem;">🔄 Korduvkorjed</div>
+      <div style="font-size:0.84rem;color:var(--mid);line-height:1.65;">
+        <strong>Järelkorje</strong> (7–14 p. pärast esmast):<br>
+        <span style="color:var(--green);font-weight:700;">–25%</span> esmasest hinnast<br><br>
+        <strong>Edasised korduvkorjed</strong> hooaja jooksul:<br>
+        <span style="color:var(--green);font-weight:700;">–30%</span> tavahinnast
+      </div>
+    </div>
+    <div style="background:var(--green-pale);border:1.5px solid var(--green-soft);border-radius:var(--r);padding:1.4rem;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--green);margin-bottom:0.7rem;">📦 Hoolduspakett</div>
+      <div style="font-size:0.84rem;color:var(--mid);line-height:1.65;">
+        Soodsam kui iga kord eraldi tellida.<br>
+        <strong>Min. periood:</strong> 3 kuud<br>
+        <em style="color:var(--gray);font-size:0.78rem;">Kestused 2–6 kuud – vaata allpool ↓</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOLDUSPAKETT -->
+<section class="sec maintain-sec reveal" id="hooldus">
+  <div class="sec-tag">Hoolduspakett</div>
+  <h2 class="sec-title">Regulaarne kaitse hooaja jooksul</h2>
+  <p class="sec-sub">Vali endale sobiv periood. Minimaalne periood on 3 kuud. Soodsam kui iga kuu eraldi tellida.</p>
+
+  <div class="maintain-card">
+    <div class="maintain-head">
+      <div>
+        <div class="maintain-title">Standardhooldus – 1 korje kuus</div>
+        <div class="maintain-sub">Valitud perioodi jooksul käib meeskond kord kuus läbi</div>
+      </div>
+      <div class="maintain-badge">Parim hind pikaajaliselt</div>
+    </div>
+
+    <div class="duration-label">Vali hooldusperiood</div>
+    <div class="duration-pills">
+      <button class="dur-pill" data-months="2">2 kuud</button>
+      <button class="dur-pill active" data-months="3">3 kuud</button>
+      <button class="dur-pill" data-months="4">4 kuud</button>
+      <button class="dur-pill" data-months="5">5 kuud</button>
+      <button class="dur-pill" data-months="6">6 kuud</button>
+    </div>
+
+    <div class="maintain-tiers">
+      <div class="tier-row">
+        <div>
+          <div class="tier-name">Kuni 3000 m² <span class="disc-tag" id="disc-tag">Säästad <span id="savings-pct">0%</span></span></div>
+          <div class="tier-desc">Standardhooldus, 1 korje/kuu</div>
+        </div>
+        <div class="tier-price">
+          <span id="price-small">150 €</span>
+          <small id="period-label">/ 3 kuu periood</small>
+        </div>
+      </div>
+      <div class="tier-row" style="border-style:dashed;opacity:.7;">
+        <div>
+          <div class="tier-name">Üle 3000 m²</div>
+          <div class="tier-desc">Individuaalne hinnapakkumine</div>
+        </div>
+        <div class="tier-price" style="color:var(--gray);">
+          <span>Küsi</span>
+          <small>pakkumist</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="maintain-note" id="maintain-note">
+      💡 <strong>3-kuuline periood:</strong> 150 € kokku (50 €/kuu). Iga kuu eraldi tellimisel maksaksid rohkem.
+    </div>
+  </div>
+</section>
+
+<!-- KALKULAATOR -->
+<section class="sec calc-sec reveal" id="calc">
+  <div class="sec-tag">Kalkulaator</div>
+  <h2 class="sec-title">Arvuta oma hind</h2>
+  <p class="sec-sub">Sisesta krundi pindala ja vali teenus – saad kohe hinnaarvutuse.</p>
+
+  <div class="calc-box">
+    <div>
+      <label class="field-label">Krundi / objekti pindala (m²)</label>
+      <input type="number" id="area" class="field-input" placeholder="Näiteks 1200">
+      <div class="calc-options" id="calc-options">
+        <div class="calc-opt active" data-price="0.05" data-name="Käsitsi korje">
+          <span>Käsitsi korje</span>
+          <span class="calc-opt-price">0,05 €/m²</span>
+        </div>
+        <div class="calc-opt" data-price="0.11" data-name="Käsitsi + graanulid">
+          <span>Käsitsi + graanulid</span>
+          <span class="calc-opt-price">0,11 €/m²</span>
+        </div>
+        <div class="calc-opt" data-price="0.07" data-name="Ainult graanulid">
+          <span>Ainult graanulid</span>
+          <span class="calc-opt-price">0,07 €/m²</span>
+        </div>
+      </div>
+      <div class="calc-note">*Ühekordse korje miinimumhind alates 3000 m² sisestusest: 75 €. Kõik hinnad sisaldavad käibemaksu.</div>
+    </div>
+    <div class="calc-result">
+      <div class="calc-result-label">Hinnanguline maksumus</div>
+      <div class="calc-result-price" id="calcPrice">— €</div>
+      <div class="calc-result-break" id="calcBreak">Sisesta pindala ja vali teenus</div>
+      <button class="btn-white" style="margin-top:1.2rem;" onclick="scrollToSection('paring')">Küsi täpset pakkumist</button>
+    </div>
+  </div>
+</section>
+
+<!-- KUIDAS TÖÖTAME -->
+<section class="sec how-sec reveal" id="kuidas">
+  <div class="sec-tag">Protsess</div>
+  <h2 class="sec-title">Kuidas me töötame</h2>
+  <div class="how-grid">
+    <div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div><h4>Nõupidamine</h4><p>Meeskond peab nõu aia omanikuga – hindame olukorda ja selgitame sobiva lahenduse.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div><h4>Tõrje või korje</h4><p>Teostame valitud teenuse – käsitsi korje, graanulite paigaldus või mõlemad.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div><h4>Lõpparuanne</h4><p>Anname ülevaate tulemusest ja soovitame järelmeetmeid pikaajalise kaitse tagamiseks.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="how-visual">
+      <div class="how-card"><div class="how-card-icon">📞</div><span>Tasuta nõustamine enne tellimust</span></div>
+      <div class="how-card"><div class="how-card-icon">🌱</div><span>Loodussõbralikud graanulid</span></div>
+      <div class="how-card"><div class="how-card-icon">🔄</div><span>Korduvkorjed soodushinnaga</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Võõrnälkaprobleem Põhja-Eestis? Lahendame kiiresti.</h2>
+  <button class="btn-white" onclick="scrollToSection('paring')">Küsi tasuta pakkumist →</button>
+</div>
+
+<!-- KONTAKT -->
+<section class="sec contact-sec reveal" id="kontakt">
+  <div class="contact-grid">
+    <div>
+      <div class="sec-tag">Kontakt</div>
+      <h2 class="sec-title">Võtke meiega ühendust</h2>
+      <p class="sec-sub">Teenindame ainult Harjumaad – tagame kiire reageerimise ja kohaliku tundmise.</p>
+      <div class="contact-info">
+        <div class="contact-item"><div class="contact-icon">📞</div><span>+372 5225 969</span></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><span>info@terminexeesti.ee</span></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><span>Harjumaa, Eesti</span></div>
+      </div>
+    </div>
+    <div id="paring">
+      <div class="sec-tag">Päring</div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.4rem;">Saada päring</h3>
+      <form class="contact-form" id="paringuvorm">
+        <div class="form-row">
+          <input type="text" id="f_name" placeholder="Teie nimi" required>
+          <input type="tel" id="f_phone" placeholder="Telefon">
+        </div>
+        <input type="email" id="f_email" placeholder="teie@email.ee" required>
+        <select id="f_service" required>
+          <option>Käsitsi korje (0,05 €/m²)</option>
+          <option>Käsitsi korje + graanulid (0,11 €/m²)</option>
+          <option>Ainult graanulid (0,07 €/m²)</option>
+          <option>Hoolduspakett (3–6 kuud)</option>
+          <option>Pole kindel – soovin nõu</option>
+        </select>
+        <textarea id="f_message" placeholder="Kirjeldage probleemi (aia suurus, asukoht Harjumaal, proovinud varem midagi?)"></textarea>
+        <button class="btn-pill" style="width:100%;padding:14px;" type="button" onclick="handleSubmit()">Saada päring ✉️</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Terminex – usaldusväärne võõrnälkjatõrje Harjumaal</div>
+  <div>Kalkulaator annab soovitusliku hinna. Täpne hind sõltub krundist.</div>
+</footer>
+
+<div class="toast" id="toast">✓ Päring saadetud! Võtame peagi ühendust.</div>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+// ─── EMAILJS KONFIGURATSIOON ─────────────────────────
+// ▼▼▼ ASENDA OMA VÕTMETEGA ▼▼▼
+const EMAILJS_PUBLIC_KEY          = 'SINU_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID          = 'SINU_SERVICE_ID';
+const EMAILJS_TEMPLATE_TERMINEX   = 'SINU_TEMPLATE_ID_TERMINEX'; // Mall 1 → info@terminexeesti.ee
+const EMAILJS_TEMPLATE_CLIENT     = 'SINU_TEMPLATE_ID_CLIENT';   // Mall 2 → kliendile kinnitus
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+</script>
+
+<script>
+// ─── NAV SCROLL ───────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+});
+
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── SMOOTH ANCHOR LINKS ──────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ─── KALKULAATOR ─────────────────────────────────────
+let selPrice = 0.05, selName = 'Käsitsi korje';
+const MIN_PRICE = 75;
+
+document.querySelectorAll('.calc-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.calc-opt').forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    selPrice = parseFloat(opt.dataset.price);
+    selName = opt.dataset.name;
+    updateCalc();
+  });
+});
+
+document.getElementById('area').addEventListener('input', updateCalc);
+
+function updateCalc() {
+  const area = parseFloat(document.getElementById('area').value);
+  const priceEl = document.getElementById('calcPrice');
+  const breakEl = document.getElementById('calcBreak');
+
+  if (!area || area <= 0) {
+    priceEl.textContent = '— €';
+    breakEl.textContent = 'Sisesta pindala ja vali teenus';
+    return;
+  }
+
+  let raw = area * selPrice;
+  const minPriceApplies = area >= 3000 && raw < MIN_PRICE;
+  let total = minPriceApplies ? MIN_PRICE : raw;
+  let minNote = minPriceApplies ? ` (miinimumhind)` : '';
+
+  priceEl.textContent = `€ ${total.toFixed(2)}`;
+  breakEl.innerHTML = `${area} m² × ${selPrice.toFixed(2)} €/m²<br><em>${selName}</em>${minNote}`;
+}
+
+// ─── HOOLDUSPAKETT DURATION ───────────────────────────
+const BASE_MONTHLY = 50; // €/kuu (3 kuu periood = 150€)
+const DISCOUNTS = { 2: 0, 3: 0, 4: 0.05, 5: 0.08, 6: 0.12 };
+
+document.querySelectorAll('.dur-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.dur-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const months = parseInt(pill.dataset.months);
+    updateMaintain(months);
+  });
+});
+
+function updateMaintain(months) {
+  const disc = DISCOUNTS[months] || 0;
+  const monthlyPrice = months < 3 ? BASE_MONTHLY * 1.1 : BASE_MONTHLY * (1 - disc);
+  const total = Math.round(monthlyPrice * months);
+  const discPct = Math.round(disc * 100);
+
+  document.getElementById('price-small').textContent = `${total} €`;
+  document.getElementById('period-label').textContent = `/ ${months} kuu periood`;
+  document.getElementById('savings-pct').textContent = discPct > 0 ? `${discPct}%` : '';
+
+  const discTag = document.getElementById('disc-tag');
+  if (discPct > 0) {
+    discTag.style.display = 'inline';
+  } else {
+    discTag.style.display = months < 3 ? 'none' : 'none';
+  }
+
+  const noteEl = document.getElementById('maintain-note');
+  if (months < 3) {
+    noteEl.innerHTML = `⚠️ <strong>${months}-kuuline periood</strong> on lühim saadaolev valik. Minimaalne periood on 3 kuud, et saada parima hinna. Hind ${total} €.`;
+  } else if (discPct > 0) {
+    noteEl.innerHTML = `💡 <strong>${months}-kuuline periood:</strong> ${total} € kokku (${Math.round(total/months)} €/kuu). Säästad <strong>${discPct}%</strong> võrreldes 3-kuulise perioodiga!`;
+  } else {
+    noteEl.innerHTML = `💡 <strong>3-kuuline periood:</strong> ${total} € kokku (${Math.round(total/months)} €/kuu). Iga kuu eraldi tellimisel maksaksid rohkem.`;
+  }
+}
+
+// ─── FORM SUBMIT + EMAILJS + RATE LIMIT ──────────────
+const RATE_LIMIT_KEY = 'terminex_form_submissions';
+const MAX_SUBMISSIONS = 2;
+const TIME_WINDOW = 3600000; // 1 tund
+
+function handleSubmit() {
+  const toast = document.getElementById('toast');
+
+  // Välju kui rate limit täis
+  const now = Date.now();
+  let submissions = JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) || '[]');
+  submissions = submissions.filter(t => now - t < TIME_WINDOW);
+  if (submissions.length >= MAX_SUBMISSIONS) {
+    const mins = Math.ceil((submissions[0] + TIME_WINDOW - now) / 60000);
+    toast.textContent = `⚠️ Saad järgmise päringu saata ${mins} minuti pärast.`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+    return;
+  }
+
+  // Kogu vormi andmed
+  const nimi     = document.getElementById('f_name').value.trim();
+  const telefon  = document.getElementById('f_phone').value.trim();
+  const email    = document.getElementById('f_email').value.trim();
+  const teenus   = document.getElementById('f_service').value;
+  const sonnum   = document.getElementById('f_message').value.trim();
+
+  if (!nimi || !email) {
+    toast.textContent = '⚠️ Palun täida nimi ja e-mail.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+    return;
+  }
+
+  const templateParams = {
+    nimi, telefon, email, teenus, sonnum,
+    kuupäev: new Date().toLocaleDateString('et-EE')
+  };
+
+  // Saada mõlemad meilid paralleelselt
+  Promise.all([
+    // Mall 1: päring → info@terminexeesti.ee
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_TERMINEX, templateParams),
+    // Mall 2: kinnitus → kliendile
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CLIENT, templateParams)
+  ])
+  .then(() => {
+    submissions.push(now);
+    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(submissions));
+    toast.textContent = '✓ Päring saadetud! Võtame peagi ühendust.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    document.getElementById('paringuvorm').reset();
+  })
+  .catch(err => {
+    console.error('EmailJS viga:', err);
+    toast.textContent = '❌ Saatmine ebaõnnestus. Helista: +372 5225 969';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  });
+}
+
+// ─── SCROLL REVEAL ───────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
