@@ -1,1 +1,1 @@
-Veebisaidiga seotud failid, uusim versioon 1.1
+Veebisaidiga seotud failid, index ver 1.1
