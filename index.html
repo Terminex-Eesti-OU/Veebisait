@@ -87,7 +87,7 @@
     padding: 5px 14px; border-radius: 40px; margin-bottom: 1.4rem;
   }
   .hero h1 {
-    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 7vw, 3.8rem);
+    font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem);
     font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
   }
   .hero h1 .accent { color: var(--green); }
@@ -108,9 +108,8 @@
     background: linear-gradient(135deg, var(--green-pale) 0%, #c8ecd8 100%);
     border-radius: 32px; height: 420px;
     box-shadow: 0 24px 60px rgba(26,122,60,.12);
-    overflow: hidden;
   }
-  .hero-visual img { height: 400px; max-height: 100%; max-width: 100%; filter: drop-shadow(0 12px 20px rgba(0,0,0,.12)); }
+  .hero-visual img { height: 400px; max-height: 100%; filter: drop-shadow(0 12px 20px rgba(0,0,0,.12)); }
 
   .hero-stats {
     display: flex; gap: 2.5rem; margin-top: 2.5rem;
@@ -424,8 +423,8 @@
     .hero { grid-template-columns: 1fr; text-align: center; padding-top: 110px; }
     .hero-sub { margin-left: auto; margin-right: auto; }
     .hero-btns { justify-content: center; }
-    .hero-visual { height: 220px; width: 100%; }
-    .hero-visual img { height: 180px; width: auto; }
+    .hero-visual { height: 260px; }
+    .hero-visual img { height: 220px; }
     .packages-grid { grid-template-columns: 1fr; }
     .calc-box { grid-template-columns: 1fr; }
     .how-grid { grid-template-columns: 1fr; }
@@ -438,18 +437,6 @@
     .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
     .form-row { grid-template-columns: 1fr; }
     .calc-result-price { font-size: 2.4rem; }
-  }
-
-  /* ─── INFO PANELS ──────────────────────────── */
-  .info-panels {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.2rem;
-  }
-
-  @media (max-width: 900px) {
-    .info-panels { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 480px) {
@@ -597,7 +584,7 @@
   </div>
 
   <!-- ÜHEKORDNE / KORDUVKORJED INFOPANEEL -->
-  <div class="info-panels">
+  <div style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;">
     <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:1.4rem;">
       <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark);margin-bottom:0.7rem;">🔹 Ühekordne korje</div>
       <div style="font-size:0.84rem;color:var(--mid);line-height:1.65;">
